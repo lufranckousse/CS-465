@@ -1,12 +1,18 @@
 /* GET travel view */
-var fs = require('fs');
-var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
+const mongoose = require('mongoose');
+const Trip = mongoose.model('trips');
 
-const travel = (req, res) => {
-  res.render('travel', {
-    title: 'Travlr Getaways',
-    trips
-  });
+const travel = async (req, res, next) => {
+  try {
+    const trips = await Trip.find({}).lean().exec();
+    res.render('travel', {
+      title: 'Travlr Getaways',
+      trips
+    });
+  } catch (err) {
+    console.error('Unable to render travel page:', err.message);
+    next(err);
+  }
 };
 
 module.exports = {

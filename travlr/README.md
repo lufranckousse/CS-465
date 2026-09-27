@@ -1,37 +1,24 @@
-# CS 465 Module Two - Travlr Getaways
+# Travlr Getaways — Module Four
 
-This project refactors the customer-facing Travlr Getaways application into an MVC structure and introduces Handlebars (HBS) templating for the Travel page.
+Module Four adds MongoDB access through Mongoose to the Travlr Express application.
 
-## Module Two implementation
+## Requirements
+- Node.js / npm
+- MongoDB running locally on `mongodb://127.0.0.1:27017/travlr`, or set `MONGODB_URI`
 
-- Added `app_server/` to organize the MVC application.
-- Moved Express routes and views into `app_server/`.
-- Added `app_server/controllers/main.js` and `app_server/controllers/travel.js`.
-- Added a `/travel` route that delegates rendering to the travel controller.
-- Converted the static Travel page into `app_server/views/travel.hbs`.
-- Added reusable Handlebars partials for the header and footer.
-- Registered the Handlebars partials directory in `app.js`.
-- Updated the Express views path to `app_server/views`.
-- Kept the original static files in `public/` so CSS, images, and the remaining pages continue to work.
+## Setup and test
+1. Run `npm install`.
+2. Start MongoDB.
+3. Run `npm run seed` to load `data/trips.json` into the `trips` collection.
+4. Run `npm start`.
+5. Open `http://localhost:3000/travel` to verify the customer-facing page reads trips from MongoDB.
+6. Open `http://localhost:3000/api/trips` to verify the API returns trip data as JSON.
+7. In MongoDB Compass, connect to `mongodb://127.0.0.1:27017`, open the `travlr` database and `trips` collection, and verify the three trip documents.
 
-## Run locally
-
-1. Open a terminal in the `travlr` folder.
-2. Run `npm install`.
-3. Run `npm start`.
-4. Open `http://localhost:3000/travel` in a browser.
-
-The `/travel` URL should render the Travel page through the MVC route, controller, and HBS view. The header and footer are rendered from Handlebars partials.
-
-## Module Two Git workflow
-
-Create the Module Two branch from the completed Module One work:
-
-```bash
-git checkout module1
-git pull
-git checkout -b module2
-git add .
-git commit -m "Module 2 completed baseline"
-git push --set-upstream origin module2
-```
+## Module Four implementation
+- `app_api/models/db.js`: Mongoose connection and connection/error handling.
+- `app_api/models/travlr.js`: trip schema with required-field validation.
+- `app_api/controllers/trips.js`: retrieves trip documents and returns JSON.
+- `app_api/routes/index.js`: exposes `GET /api/trips`.
+- `app_api/models/seed.js`: loads the sample trips from `data/trips.json` into MongoDB.
+- `app_server/controllers/travel.js`: renders the customer travel page using live MongoDB data.
