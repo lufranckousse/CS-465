@@ -1,6 +1,6 @@
-# Travlr Getaways — Module Four
+# Travlr Getaways — Module Five
 
-Module Four adds MongoDB access through Mongoose to the Travlr Express application.
+Module Five separates the Travlr REST API from the MVC website logic and uses the API to supply trip data to the customer-facing travel page.
 
 ## Requirements
 - Node.js / npm
@@ -11,14 +11,15 @@ Module Four adds MongoDB access through Mongoose to the Travlr Express applicati
 2. Start MongoDB.
 3. Run `npm run seed` to load `data/trips.json` into the `trips` collection.
 4. Run `npm start`.
-5. Open `http://localhost:3000/travel` to verify the customer-facing page reads trips from MongoDB.
-6. Open `http://localhost:3000/api/trips` to verify the API returns trip data as JSON.
-7. In MongoDB Compass, connect to `mongodb://127.0.0.1:27017`, open the `travlr` database and `trips` collection, and verify the three trip documents.
+5. Open `http://localhost:3000/api/trips` to retrieve the complete trip collection.
+6. Open `http://localhost:3000/api/trips/GALR` to retrieve a single trip by trip code.
+7. Open `http://localhost:3000/travel` to verify the MVC page obtains and renders trip data through the REST API.
+8. Test the same API URLs with Postman and verify HTTP status codes and JSON responses.
 
-## Module Four implementation
-- `app_api/models/db.js`: Mongoose connection and connection/error handling.
-- `app_api/models/travlr.js`: trip schema with required-field validation.
-- `app_api/controllers/trips.js`: retrieves trip documents and returns JSON.
-- `app_api/routes/index.js`: exposes `GET /api/trips`.
-- `app_api/models/seed.js`: loads the sample trips from `data/trips.json` into MongoDB.
-- `app_server/controllers/travel.js`: renders the customer travel page using live MongoDB data.
+## Module Five implementation
+- `app_api/controllers/trips.js`: Mongoose FIND operations for all trips and a specific trip code, with HTTP error handling.
+- `app_api/routes/index.js`: REST routes for `GET /api/trips` and `GET /api/trips/:tripCode`.
+- `app_api/models/travlr.js`: trip schema including an indexed trip code used by the parameterized API route.
+- `app_server/controllers/travel.js`: uses Node's `fetch()` API to request JSON from `/api/trips` instead of querying MongoDB directly.
+- `app_server/views/travel.hbs`: trip links target the individual REST API endpoint.
+- `data/trips.json`: includes a unique code for each sample trip and remains available for database seeding/submission.
