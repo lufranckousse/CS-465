@@ -1,0 +1,2 @@
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h2>Trip Listing</h2><p class="text-muted mb-0">{{ message }}</p></div><button (click)="addTrip()" class="btn btn-info">Add Trip</button></div>
+<div class="row g-4"><div *ngFor="let trip of trips" class="col-12 col-md-4"><app-trip-card [trip]="trip" (deleted)="deleteTrip($event)"></app-trip-card></div></div>

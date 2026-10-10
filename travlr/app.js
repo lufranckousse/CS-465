@@ -30,6 +30,15 @@ app.use(cookieParser());
 // Serve the original Travlr static assets and pages.
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Enable the Angular admin SPA (localhost:4200) to use the REST API.
+app.use('/api', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);

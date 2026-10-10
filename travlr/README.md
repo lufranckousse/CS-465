@@ -23,3 +23,8 @@ Module Five separates the Travlr REST API from the MVC website logic and uses th
 - `app_server/controllers/travel.js`: uses Node's `fetch()` API to request JSON from `/api/trips` instead of querying MongoDB directly.
 - `app_server/views/travel.hbs`: trip links target the individual REST API endpoint.
 - `data/trips.json`: includes a unique code for each sample trip and remains available for database seeding/submission.
+
+## Module 6 Admin SPA
+The Angular admin SPA is in `app_admin`. It lists trips from the Express/MongoDB API and supports adding, editing, and deleting trips through GET, POST, PUT, and DELETE endpoints.
+
+Run the Express backend from the project root with `npm start`, then run the Angular client in a second terminal with `cd app_admin && npm install && npm start`. Open `http://localhost:4200`.
