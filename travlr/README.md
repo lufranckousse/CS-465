@@ -1,30 +1,27 @@
-# Travlr Getaways — Module Five
+# Travlr Getaways - Module 7
 
-Module Five separates the Travlr REST API from the MVC website logic and uses the API to supply trip data to the customer-facing travel page.
+This version adds authentication and protected administrative operations to the Travlr full-stack application.
 
-## Requirements
-- Node.js / npm
-- MongoDB running locally on `mongodb://127.0.0.1:27017/travlr`, or set `MONGODB_URI`
+## Run the Express API
 
-## Setup and test
-1. Run `npm install`.
-2. Start MongoDB.
-3. Run `npm run seed` to load `data/trips.json` into the `trips` collection.
+1. Start MongoDB.
+2. From the `travlr` directory, run `npm install`.
+3. Copy `.env.example` to `.env` and replace the example value with a long secret string.
 4. Run `npm start`.
-5. Open `http://localhost:3000/api/trips` to retrieve the complete trip collection.
-6. Open `http://localhost:3000/api/trips/GALR` to retrieve a single trip by trip code.
-7. Open `http://localhost:3000/travel` to verify the MVC page obtains and renders trip data through the REST API.
-8. Test the same API URLs with Postman and verify HTTP status codes and JSON responses.
+5. The REST API is available at `http://localhost:3000/api`.
 
-## Module Five implementation
-- `app_api/controllers/trips.js`: Mongoose FIND operations for all trips and a specific trip code, with HTTP error handling.
-- `app_api/routes/index.js`: REST routes for `GET /api/trips` and `GET /api/trips/:tripCode`.
-- `app_api/models/travlr.js`: trip schema including an indexed trip code used by the parameterized API route.
-- `app_server/controllers/travel.js`: uses Node's `fetch()` API to request JSON from `/api/trips` instead of querying MongoDB directly.
-- `app_server/views/travel.hbs`: trip links target the individual REST API endpoint.
-- `data/trips.json`: includes a unique code for each sample trip and remains available for database seeding/submission.
+## Run the Angular admin SPA
 
-## Module 6 Admin SPA
-The Angular admin SPA is in `app_admin`. It lists trips from the Express/MongoDB API and supports adding, editing, and deleting trips through GET, POST, PUT, and DELETE endpoints.
+1. Open another terminal in `travlr/app_admin`.
+2. Run `npm install`.
+3. Run `npm start`.
+4. Open `http://localhost:4200`.
 
-Run the Express backend from the project root with `npm start`, then run the Angular client in a second terminal with `cd app_admin && npm install && npm start`. Open `http://localhost:4200`.
+## Authentication endpoints
+
+- `POST /api/register` creates a user and returns a JSON Web Token.
+- `POST /api/login` validates a user and returns a JSON Web Token.
+- `GET /api/trips` and `GET /api/trips/:tripCode` remain available for trip retrieval.
+- `POST`, `PUT`, and `DELETE` trip operations require an `Authorization: Bearer <token>` header.
+
+The Angular admin application stores the current token in browser local storage, automatically adds it to protected API requests, hides administrative controls when logged out, and protects the add/edit routes.

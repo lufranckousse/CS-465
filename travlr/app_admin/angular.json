@@ -16,41 +16,28 @@
             "outputPath": "dist/travlr-admin",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/assets/css/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/assets/css/styles.css"],
             "scripts": []
           },
           "configurations": {
-            "production": {},
-            "development": {}
+            "production": { "outputHashing": "all" },
+            "development": { "optimization": false, "sourceMap": true }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "travlr-admin:build:production"
-            },
-            "development": {
-              "buildTarget": "travlr-admin:build:development"
-            }
+            "production": { "buildTarget": "travlr-admin:build:production" },
+            "development": { "buildTarget": "travlr-admin:build:development" }
           },
           "defaultConfiguration": "development"
         }
       }
     }
   },
-  "cli": {
-    "analytics": "4687be60-c93d-4f0c-ac74-9950fc7bdff0"
-  }
+  "cli": { "analytics": false }
 }
